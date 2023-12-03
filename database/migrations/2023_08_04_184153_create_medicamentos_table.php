@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('gramos');
             $table->integer('cantidad');
+            $table->string('uso');
+            $table->date('fechaV')->nullable();
             $table->timestamps();
         });
     }

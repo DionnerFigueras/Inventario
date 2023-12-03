@@ -27,13 +27,15 @@ class InsumoController extends Controller
         
         $request->validate([
             'nombreInsumo' => ['required'],
-            'cantidadInsumo' => ['required']
+            'cantidadInsumo' => ['required'],
+            'usoInsumo' => ['required']
         ]);
 
         $insumo = new Insumo;
 
         $insumo->nombre = $request->input('nombreInsumo');
         $insumo->cantidad = $request->input('cantidadInsumo');
+        $insumo->uso = $request->input('usoInsumo');
 
         $insumo->save();
 
@@ -51,11 +53,13 @@ class InsumoController extends Controller
 
         $request->validate([
             'nombreInsumo' => ['required'],
-            'cantidadInsumo' => ['required']
+            'cantidadInsumo' => ['required'],
+            'usoInsumo' => ['required']
         ]);
 
         $insumo->nombre = $request->input('nombreInsumo');
         $insumo->cantidad = $request->input('cantidadInsumo');
+        $insumo->uso = $request->input('usoInsumo');
 
         $insumo->save();
 

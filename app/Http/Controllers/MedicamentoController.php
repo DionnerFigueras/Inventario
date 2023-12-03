@@ -30,7 +30,9 @@ class MedicamentoController extends Controller
         $request->validate([
             'nombreMedicamento' => ['required'],
             'gramosMedicamento' => ['required'],
-            'cantidadMedicamento' => ['required']
+            'cantidadMedicamento' => ['required'],
+            'usoMedicamento' => ['required'],
+            'fechaV' => ['required'],
         ]);
 
         $medicamento = new Medicamento;
@@ -38,9 +40,10 @@ class MedicamentoController extends Controller
         $medicamento->nombre = $request->input('nombreMedicamento');
         $medicamento->gramos = $request->input('gramosMedicamento');
         $medicamento->cantidad = $request->input('cantidadMedicamento');
-        
+        $medicamento->uso = $request->input('usoMedicamento');
+        $medicamento->fechaV = $request->input('fechaV');
         $medicamento->save();
-
+        
         session()->flash('estatus', 'Medicamento agreado');
 
         return to_route('medicamentos');
@@ -55,14 +58,18 @@ class MedicamentoController extends Controller
         $request->validate([
             'nombreMedicamento' => ['required'],
             'gramosMedicamento' => ['required'],
-            'cantidadMedicamento' => ['required']
+            'cantidadMedicamento' => ['required'],
+            'usoMedicamento' => ['required'],
+            'fechaV' => ['required'],
         ]);
 
 
         $medicamento->nombre = $request->input('nombreMedicamento');
         $medicamento->gramos = $request->input('gramosMedicamento');
         $medicamento->cantidad = $request->input('cantidadMedicamento');
-        
+        $medicamento->uso = $request->input('usoMedicamento');
+        $medicamento->fechaV = $request->input('fechaV');
+
         $medicamento->save();
 
         session()->flash('estatus', 'Medicamento Actulizado');

@@ -1,21 +1,27 @@
-<x-layouts.vistaPrincipal 
-    titulo="Editar Medicamento - {{$medicamento->nombre}}" 
-    meta-description="Editar Medicamentos meta description"> 
+<x-layouts.vistaPrincipal titulo="Editar Medicamento - {{ $medicamento->nombre }}"
+    meta-description="Editar Medicamentos meta description">
+    <div class="container bg-white w-50">
 
-    <h1>Editar Medicamento</h1>
+        <div class="bg-primary row mb-3 mt-3" style="text-align: center; color: white">
 
-    <form action="{{route('medicamento.update', $medicamento)}}" method="POST">
+            <h1>
+                <p class="fw-bold mt-2">Editar Medicamento</p>
+            </h1>
+        </div>
 
-        @csrf @method('PATCH')
 
-        @include('/Medicamentos/formularioMedicamentos')
+        <form action="{{ route('medicamento.update', $medicamento) }}" method="POST" class="row ms-4 me-4 mb-3">
 
-        <button type="submit"> Actulizar </button>
+            @csrf @method('PATCH')
 
-    </form>    
+            @include('/Medicamentos/formularioMedicamentos')
 
-    <h2>
-        <a href="{{route('medicamentos')}}">Regresar</a>
-    </h2>
+            <button class="btn btn-success" type="submit"> Actulizar </button>
 
+        </form>
+
+        <h2 class="row ms-4 me-4">
+            <a class="btn btn-secondary mb-2" href="{{ route('medicamentos') }}">Regresar</a>
+        </h2>
+    </div>
 </x-layouts.vistaPrincipal>

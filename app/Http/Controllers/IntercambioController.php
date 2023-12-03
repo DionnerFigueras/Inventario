@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Intercambio;
 use App\Models\Medicamento;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class IntercambioController extends Controller
@@ -26,15 +28,24 @@ class IntercambioController extends Controller
 
     public function store(Request $request){
 
-        $medicamento = Medicamento::where('nombre', '=', $request->input('intercambiar'))->get();
-        
-        
+        $medicamento1 = Medicamento::where('nombre', '=', $request->input('ofrecido'))->get();
+    
+        $medicamento2 = Medicamento::where('nombre', '=', $request->input('solicitado'))->get();
+
         $request->validate([
-            'intercambiar' => ['required', Rule::notIn($request->input('intercambiado')), 'exists:medicamentos,nombre'],
+            'ofrecido' => ['required', Rule::notIn($request->input('solicidato')), 'exists:medicamentos,nombre'],
             'cantidad1' => ['required', 'numeric'],
-            'intercambiado' => ['required', Rule::notIn($request->input('intercambiar')), 'exists:medicamentos,nombre'],
+            'solicitado' => ['required', Rule::notIn($request->input('ofrecido')), 'exists:medicamentos,nombre'],
             'cantidad2' => ['required', 'numeric']
         ]); 
+
+        $medicamentoOfrecido = Medicamento::find($medicamento1[0]->id);
+
+        $medicamentoSolicitado = Medicamento::find($medicamento2[0]->id);
+
+        $medicamentoOfrecido->cantidad = $medicamentoOfrecido->cantidad + $request->input('cantidad1');
+
+        $medicamentoSolicitado->cantidad = $medicamentoSolicitado->cantidad - $request->input('cantidad2');
 
         $intercambio = new Intercambio;
 
@@ -43,12 +54,14 @@ class IntercambioController extends Controller
         $intercambio->medicamento2 = $request->input('intercambiado');
         $intercambio->cantidad2 = $request->input('cantidad2');        
 
+        $medicamentoOfrecido->save();
+        $medicamentoSolicitado->save();
         $intercambio->save();
 
         session()->flash('estatus', 'Intercambio agregado');
 
         return to_route('intercambios');
-        
+
     }
     
 
